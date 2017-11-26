@@ -12,6 +12,7 @@
 		CF476FF01FC94034009E1867 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF476FEE1FC94034009E1867 /* Main.storyboard */; };
 		CF476FF21FC94034009E1867 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF476FF11FC94034009E1867 /* Assets.xcassets */; };
 		CF476FF51FC94034009E1867 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF476FF31FC94034009E1867 /* LaunchScreen.storyboard */; };
+		CF476FFD1FC94524009E1867 /* waterfallLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF476FFC1FC94524009E1867 /* waterfallLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		CF476FF11FC94034009E1867 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CF476FF41FC94034009E1867 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CF476FF61FC94034009E1867 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CF476FFC1FC94524009E1867 /* waterfallLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = waterfallLayout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			children = (
 				CF476FEA1FC94034009E1867 /* AppDelegate.swift */,
 				CF476FEC1FC94034009E1867 /* ViewController.swift */,
+				CF476FFC1FC94524009E1867 /* waterfallLayout.swift */,
 				CF476FEE1FC94034009E1867 /* Main.storyboard */,
 				CF476FF11FC94034009E1867 /* Assets.xcassets */,
 				CF476FF31FC94034009E1867 /* LaunchScreen.storyboard */,
@@ -137,6 +140,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF476FED1FC94034009E1867 /* ViewController.swift in Sources */,
+				CF476FFD1FC94524009E1867 /* waterfallLayout.swift in Sources */,
 				CF476FEB1FC94034009E1867 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -276,6 +280,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = photoBrowserExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.puc.presto.ewallet.photoBrowserExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -290,6 +295,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = photoBrowserExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.puc.presto.ewallet.photoBrowserExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
