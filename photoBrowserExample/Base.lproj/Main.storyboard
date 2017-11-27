@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -24,7 +25,29 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="806" y="423"/>
+            <point key="canvasLocation" x="1754" y="355"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="uRw-cP-DdY">
+            <objects>
+                <viewController id="YLq-XD-WbV" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="kYR-3I-WOa">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <viewLayoutGuide key="safeArea" id="uKE-pA-Mz7"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Ajp-fV-bOU">
+                        <barButtonItem key="rightBarButtonItem" title="push" id="Hv5-vg-8it">
+                            <connections>
+                                <segue destination="BYZ-38-t0r" kind="push" id="Sia-JA-YFy"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pkU-xI-rh4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="900" y="334"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="VLv-1I-8hF">
@@ -37,7 +60,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="cPM-n4-1UB"/>
+                        <segue destination="YLq-XD-WbV" kind="relationship" relationship="rootViewController" id="xXg-mC-99W"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RG6-WN-x8y" userLabel="First Responder" sceneMemberID="firstResponder"/>

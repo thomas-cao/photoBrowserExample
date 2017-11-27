@@ -11,8 +11,8 @@ import UIKit
 private let collectonCellID = "collectonCellID"
 class ViewController: UIViewController {
     
+    fileprivate lazy var photos: [HTPhotosModel] = [HTPhotosModel]()
     fileprivate lazy var collectionView : UICollectionView = {
-
         let layout = waterfallLayout()
         layout.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10)
         layout.scrollDirection = .vertical
@@ -30,10 +30,21 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
-        
+        setPhotoModel()
         view.addSubview(collectionView)
     }
+    deinit {
+        print("viewcontroller 销毁了")
+    }
 
+    private func setPhotoModel(){
+        for i in 1...20 {
+            let photoM = HTPhotosModel()
+            photoM.iconName = "icon" + "\(i)"
+            photos.append(photoM)
+        }
+    }
+   
 }
 
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
@@ -50,6 +61,12 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
         imageView.clipsToBounds = true
         cell.backgroundView = imageView
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let photoBrowserVC = HTPhotoBrowserViewController.init(collectionView, photosModel: photos, index: indexPath)
+        photoBrowserVC.showBrowserView(self)
     }
 }
 
