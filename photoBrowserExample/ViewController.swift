@@ -38,7 +38,7 @@ class ViewController: UIViewController {
     }
 
     private func setPhotoModel(){
-        for i in 1...20 {
+        for i in 1...10 {
             let photoM = HTPhotosModel()
             photoM.iconName = "icon" + "\(i)"
             photos.append(photoM)
@@ -50,7 +50,7 @@ class ViewController: UIViewController {
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return photos.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         

@@ -14,7 +14,7 @@ protocol photoBrowserCellDelegate {
 
 class HTPhotoBrowserCell: UICollectionViewCell {
     
-    // MARK: - 属性
+    // MARK: - 懒加载属性
     open lazy var photoView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = UIViewContentMode.scaleAspectFill
@@ -25,6 +25,11 @@ class HTPhotoBrowserCell: UICollectionViewCell {
         imageView.addGestureRecognizer(tap)
         return imageView
     }()
+    fileprivate lazy var containerView: UIScrollView = {
+       let scroll = UIScrollView()
+        return scroll
+    }()
+    
    weak var delegate: photoBrowserCellDelegate?
     
     
@@ -53,12 +58,18 @@ class HTPhotoBrowserCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        photoView.frame = contentView.bounds
+       
     }
 }
 extension HTPhotoBrowserCell{
     fileprivate func setUpUI(){
-        contentView.addSubview(photoView)
+        
+        contentView.addSubview(containerView)
+        containerView.addSubview(photoView)
+        containerView.frame = contentView.bounds
+        containerView.frame.size.width -= 15
+        photoView.frame = containerView.bounds
+        
     }
     
     
