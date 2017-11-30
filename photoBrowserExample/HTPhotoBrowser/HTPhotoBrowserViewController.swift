@@ -15,6 +15,8 @@ class HTPhotoBrowserViewController: UIViewController {
     fileprivate var photosModel: [HTPhotosModel]
     fileprivate var index: IndexPath
     fileprivate var photoContentView: UICollectionView
+    fileprivate var beganScale: CGFloat = 0.0
+    fileprivate var closePageValue: CGFloat = 0.0
     fileprivate lazy var photoBrowserAnomations: HTPhotoBrowserAnomations = HTPhotoBrowserAnomations()
     fileprivate lazy var contentView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -27,6 +29,7 @@ class HTPhotoBrowserViewController: UIViewController {
         collection.dataSource = self
         collection.showsHorizontalScrollIndicator = false
         collection.register(HTPhotoBrowserCell.self, forCellWithReuseIdentifier: photoBrowserCellID)
+        collection.backgroundColor = UIColor.black
         return collection
     }()
     
@@ -36,7 +39,6 @@ class HTPhotoBrowserViewController: UIViewController {
         self.index = index
         self.photoContentView = photosContent
         super.init(nibName: nil, bundle: nil)
-        print("=========== \(index)")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -50,7 +52,6 @@ class HTPhotoBrowserViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.gray
         setUpUI()
         
     }
@@ -86,10 +87,42 @@ extension HTPhotoBrowserViewController: UICollectionViewDataSource{
         return cell
     }
 }
-
+//MARK: - cellDelegate
 extension HTPhotoBrowserViewController: photoBrowserCellDelegate{
     func closePage(photoBrowserCell: HTPhotoBrowserCell) {
         dismiss(animated: true, completion: nil)
+    }
+    func photoBrowser(pageDidBegan: HTPhotoBrowserCell, scale: CGFloat) {
+        beganScale = scale
+    }
+    func photoBrowser(pageDidChange: HTPhotoBrowserCell, scale: CGFloat) {
+        var changeY: CGFloat = 0.0
+        var upToDown: Bool = true
+        
+        if scale > beganScale{
+           changeY = scale - beganScale
+            upToDown = true
+        }else{
+            changeY = beganScale - scale
+           upToDown = false
+        }
+        var currentAlpha = changeY / 150.0
+        currentAlpha = currentAlpha > 1.0 ? 1.0 : currentAlpha
+        let alpha = 1.0 - currentAlpha
+        contentView.backgroundColor = UIColor(white: 0.0, alpha: alpha)
+        let transY = upToDown ?  changeY : -changeY
+        print("最终的 ==== \(transY)")
+        contentView.transform = CGAffineTransform(translationX: 0, y: transY)
+        // 记录改变的值
+        closePageValue = CGFloat(fabsf(Float(transY)))
+    }
+    func photoBrowser(endChange: HTPhotoBrowserCell) {
+        if closePageValue > 130 {
+            dismiss(animated: true, completion: nil)
+        }else{
+            contentView.transform = CGAffineTransform.identity
+            contentView.backgroundColor = UIColor(white: 0.0, alpha: 1.0)
+        }
     }
 }
 
