@@ -132,7 +132,9 @@ extension HTPhotoBrowserViewController: animationForDismassDelegate{
         let tempImage = UIImageView()
         tempImage.image = currentCell.photoView.image
         tempImage.frame = currentCell.photoView.frame
-        tempImage.center = currentCell.photoView.center
+        if tempImage.frame.minY == 0 && tempImage.frame.height < currentCell.frame.height {
+            tempImage.center = contentView.center
+        }
         tempImage.contentMode = UIViewContentMode.scaleAspectFill
         tempImage.clipsToBounds = true
         return tempImage

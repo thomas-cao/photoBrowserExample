@@ -38,7 +38,8 @@ class ViewController: UIViewController {
     }
 
     private func setPhotoModel(){
-        for i in 1...10 {
+        for i in 12...21 {
+            print(i)
             let photoM = HTPhotosModel()
             photoM.iconName = "icon" + "\(i)"
             photos.append(photoM)
@@ -55,7 +56,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: collectonCellID, for: indexPath)
-        let pictureName = "icon" + "\(indexPath.item + 1)"
+        let pictureName = photos[indexPath.item].iconName!
         let imageView =  UIImageView(image: UIImage(named: pictureName))
         imageView.contentMode = UIViewContentMode.scaleAspectFill
         imageView.clipsToBounds = true

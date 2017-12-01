@@ -69,11 +69,11 @@ extension HTPhotoBrowserAnomations{
         // 设置临时图片的开始位置
         tempImageV.frame = startRect
         presentView.alpha = 0.0
-        context.containerView.backgroundColor = UIColor.black
-        
+        context.containerView.backgroundColor = UIColor(white: 0.0, alpha: 0.0)
         // 执行动画
         UIView.animate(withDuration: transitionDuration(using: context), animations: {
             tempImageV.frame = delegate.endRect(indePath: idx)
+             context.containerView.backgroundColor = UIColor(white: 0.0, alpha: 1.0)
         }) { (_) in
             tempImageV.removeFromSuperview()
             presentView.alpha = 1.0
@@ -94,8 +94,10 @@ extension HTPhotoBrowserAnomations{
         let currentIdx = disDelegate.indexPathForDismassView()
         // 将当前占位图片添加到容器
         context.containerView.addSubview(tempImage)
+        context.containerView.backgroundColor = UIColor(white: 0.0, alpha: 1.0)
         UIView.animate(withDuration: transitionDuration(using: context), animations: {
             tempImage.frame = prenDelegate.startRect(indePath: currentIdx)
+            context.containerView.backgroundColor = UIColor(white: 0.0, alpha: 0.0)
         }) { (_) in
             tempImage.removeFromSuperview()
             context.completeTransition(true)
