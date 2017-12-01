@@ -11,8 +11,7 @@ import UIKit
 protocol photoBrowserCellDelegate {
    @objc optional func closePage(photoBrowserCell: HTPhotoBrowserCell)
    @objc optional  func photoBrowser(pageDidChange: HTPhotoBrowserCell, scale: CGFloat)
-    @objc optional func photoBrowser(pageDidBegan: HTPhotoBrowserCell, scale: CGFloat)
-   @objc optional func photoBrowser(endChange:HTPhotoBrowserCell)
+    @objc optional func photoBrowser(endChange: HTPhotoBrowserCell, isClosePage: Bool)
 }
 
 class HTPhotoBrowserCell: UICollectionViewCell {
@@ -37,7 +36,10 @@ class HTPhotoBrowserCell: UICollectionViewCell {
     }()
     fileprivate var isUpDownScroll: Bool = false
     fileprivate var startPoint: CGPoint = CGPoint.zero
-    fileprivate var testNum: CGFloat = 1.0
+    fileprivate var originalPoint: CGPoint = CGPoint.zero
+    fileprivate var photoCenter: CGPoint = CGPoint.zero
+    // 初始时是否可向上移动
+    fileprivate var isUpMovable: Bool = false
    weak var delegate: photoBrowserCellDelegate?
     
     //MARK: - 重写模型set方法
@@ -100,23 +102,45 @@ extension HTPhotoBrowserCell{
 
         if gesture.state == UIGestureRecognizerState.began {
              startPoint = point
+             originalPoint = point
         }
-        
         if gesture.state == UIGestureRecognizerState.changed {
-            let position = photoView.layer.position
-            if startPoint.y > point.y{ // 往上滑动
-//                photoView.layer.position = CGPoint(x: position.x, y: position.y - testNum)
-                print("\(startPoint.y - point.y)")
-                
-            }else if startPoint.y < point.y{
-                let y = position.y - startPoint.y
-                
-                print("w")
+          // 不可以直接向上拖动
+         if point.y < startPoint.y && !isUpMovable {return}
+            // 当下滑触发后，解除向上滑动锁定
+            isUpMovable = true
+                let  deviationX = point.x - startPoint.x
+                let deviationY = point.y - startPoint.y
+                startPoint = point
+                photoView.center = CGPoint(x: photoView.center.x + deviationX, y: photoView.center.y + deviationY)
+ 
+              // 设置缩放比例
+            var scale = point.y - originalPoint.y
+            // 判断缩放比例的临界值
+            let maxScale = UIScreen.main.bounds.height - 40
+            scale = scale > maxScale ? maxScale : scale
+            scale = scale <= 0 ?  0 : scale
+            
+            let ration = 1 -  scale / UIScreen.main.bounds.height
+            photoView.transform = CGAffineTransform(scaleX: ration, y: ration)
+            var alpha = 1 - scale / (UIScreen.main.bounds.width - 100)
+            if ration >= 1.0 {
+               alpha = 1.0
+            }else if alpha <= 0.0{
+                alpha = 0.0
             }
-            photoView.layer.position = point
+            delegate?.photoBrowser!(pageDidChange: self, scale: alpha)
         }
         if gesture.state == UIGestureRecognizerState.ended{
-//            delegate?.photoBrowser!(endChange: self)
+            isUpMovable = false
+            let close: Bool = photoView.center.y > (self.center.y + 60)
+            if(!close){
+                UIView.animate(withDuration: 0.25, animations: {
+                    self.photoView.transform = CGAffineTransform.identity
+                    self.photoView.center = self.photoCenter
+                })
+            }
+            delegate?.photoBrowser!(endChange: self, isClosePage: close)
         }
         
     }
@@ -136,6 +160,8 @@ extension HTPhotoBrowserCell{
             let margin = (screenHeight - size.height) * 0.5
             containerView.contentInset = UIEdgeInsetsMake(margin, 0, margin, 0)
         }
+        // 记录原始图片的center
+        photoCenter = photoView.center
     }
     private func displaySize() -> CGSize{
         guard let image = photoView.image else {
@@ -180,7 +206,7 @@ extension HTPhotoBrowserCell: UIGestureRecognizerDelegate{
             let trans = panGest.translation(in: containerView)
             let x = fabsf(Float(trans.x))
             let y = fabsf(Float(trans.y))
-            if y > x{ // 上下滑动
+            if y > x && containerView.contentSize.height <= containerView.frame.height{ // 上下滑动
                 isUpDownScroll = true
                 return false
             }else{
