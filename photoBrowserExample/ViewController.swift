@@ -38,8 +38,7 @@ class ViewController: UIViewController {
     }
 
     private func setPhotoModel(){
-        for i in 12...21 {
-            print(i)
+        for i in 1...12 {
             let photoM = HTPhotosModel()
             photoM.iconName = "icon" + "\(i)"
             photos.append(photoM)
@@ -72,9 +71,9 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
 }
 
 extension ViewController: waterfallLayoutDataSource{
-    
+    // 设置布局  每一个item的高度
     func colsheightWithIdx(_ waterFall: waterfallLayout, itemIdx: Int) -> CGFloat {
-        return  130//CGFloat(arc4random_uniform(120) + 100)
+        return  130 //CGFloat(arc4random_uniform(120) + 100)
     }
     func numberOfCols(_ waterFall: waterfallLayout) -> Int {
         return 3

@@ -2,7 +2,7 @@
 //  HTPhotoBrowserViewController.swift
 //  photoBrowserExample
 //
-//  Created by emppu－cao on 2017/11/26.
+//  Created by 魏小庄 on 2017/11/26.
 //  Copyright © 2017年 魏小庄. All rights reserved.
 //
 
@@ -131,10 +131,17 @@ extension HTPhotoBrowserViewController: animationForDismassDelegate{
         // 创建图片
         let tempImage = UIImageView()
         tempImage.image = currentCell.photoView.image
-        tempImage.frame = currentCell.photoView.frame
-        if tempImage.frame.minY == 0 && tempImage.frame.height < currentCell.frame.height {
+        let rect = currentCell.photoView.frame
+        tempImage.frame = rect
+        if tempImage.frame.origin.y != 0.0 {
+            tempImage.frame.origin.y = rect.origin.y + (currentCell.originalPoint.y - rect.size.height * 0.7)
+        }else {
             tempImage.center = contentView.center
         }
+        
+//        if tempImage.frame.minY == 0 && tempImage.frame.height < currentCell.frame.height {
+//            tempImage.center = contentView.center
+//        }
         tempImage.contentMode = UIViewContentMode.scaleAspectFill
         tempImage.clipsToBounds = true
         return tempImage

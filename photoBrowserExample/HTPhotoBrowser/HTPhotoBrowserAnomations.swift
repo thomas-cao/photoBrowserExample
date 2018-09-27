@@ -92,10 +92,12 @@ extension HTPhotoBrowserAnomations{
         // 代理获取当前的图片，和下标
         let tempImage = disDelegate.indexPathForCurrentImage()
         let currentIdx = disDelegate.indexPathForDismassView()
+        
         // 将当前占位图片添加到容器
         context.containerView.addSubview(tempImage)
-        context.containerView.backgroundColor = UIColor(white: 0.0, alpha: 1.0)
+//        context.containerView.backgroundColor = UIColor(white: 0.0, alpha: 1.0)
         UIView.animate(withDuration: transitionDuration(using: context), animations: {
+            // 设置回归位置
             tempImage.frame = prenDelegate.startRect(indePath: currentIdx)
             context.containerView.backgroundColor = UIColor(white: 0.0, alpha: 0.0)
         }) { (_) in

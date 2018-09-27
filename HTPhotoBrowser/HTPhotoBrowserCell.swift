@@ -2,7 +2,7 @@
 //  HTPhotoBrowserCell.swift
 //  photoBrowserExample
 //
-//  Created by emppu－cao on 2017/11/26.
+//  Created by 魏小庄 on 2017/11/26.
 //  Copyright © 2017年 魏小庄. All rights reserved.
 //
 
@@ -35,9 +35,9 @@ class HTPhotoBrowserCell: UICollectionViewCell {
         return scroll
     }()
     fileprivate var isUpDownScroll: Bool = false
-    fileprivate var startPoint: CGPoint = CGPoint.zero
-    fileprivate var originalPoint: CGPoint = CGPoint.zero
-    fileprivate var photoCenter: CGPoint = CGPoint.zero
+    public var startPoint: CGPoint = CGPoint.zero
+    public var originalPoint: CGPoint = CGPoint.zero
+    public var photoCenter: CGPoint = CGPoint.zero
     // 初始时是否可向上移动
     fileprivate var isUpMovable: Bool = false
    weak var delegate: photoBrowserCellDelegate?
@@ -133,7 +133,7 @@ extension HTPhotoBrowserCell{
         }
         if gesture.state == UIGestureRecognizerState.ended{
             isUpMovable = false
-            let close: Bool = photoView.center.y > (self.center.y + 60)
+            let close: Bool = photoView.center.y > self.center.y
             if(!close){
                 UIView.animate(withDuration: 0.25, animations: {
                     self.photoView.transform = CGAffineTransform.identity
@@ -141,7 +141,7 @@ extension HTPhotoBrowserCell{
                 })
             }
             delegate?.photoBrowser!(endChange: self, isClosePage: close)
-        }
+      }
         
     }
     
